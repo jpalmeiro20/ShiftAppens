@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Event Registration</h1>
+        <form id="eventForm">
+            <label for="title">Event Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="startDate">Event Start Date:</label>
+            <input type="datetime-local" id="startDate" name="startDate" required>
+
+            <label for="endDate">Event End Date:</label>
+            <input type="datetime-local" id="endDate" name="endDate" required>
+
+            <label for="location">Event Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="description">Event Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="organizer">Organizer Name:</label>
+            <input type="text" id="organizer" name="organizer" required>
+
+            <button type="submit">Add Event</button>
+        </form>
+
+        <div id="responseMessage" style="text-align: center; margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        document.getElementById("eventForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Get the form data
+            const formData = new FormData(this);
+            const data = {
+                title: formData.get("title"),
+                startDate: formData.get("startDate"),
+                endDate: formData.get("endDate"),
+                location: formData.get("location"),
+                description: formData.get("description"),
+                organizer: formData.get("organizer"),
+                // Rating is omitted now
+            };
+
+            // Send the data to the server
+            const response = await fetch('/addEvent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.text();
+            document.getElementById("responseMessage").innerHTML = result;
+
+            // Redirect to the events page if the event is added successfully
+            if (response.ok) {
+                // Redirect to the events page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/events'; // Redirect to the events page
+                }, 2000);  // Delay of 2 seconds
+            }
+        });
+    </script>
+
+</body>
+</html>

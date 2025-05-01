@@ -1,0 +1,102 @@
+/* Estilo para o fundo da página */
+body {
+    background-image: url('WhatsThePlan.png'); 
+    background-size: cover; /* A imagem cobre toda a tela, mantendo as proporções */
+    background-position: center; /* A imagem é centralizada */
+    background-attachment: fixed; /* A imagem fica fixa ao rolar */
+    color: white;
+    font-family: Arial, sans-serif;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura total da tela */
+    overflow: hidden; /* Impede que a página tenha barras de rolagem */
+    margin: 0;
+}
+
+/* Caixa de login */
+.login_box {
+    background-color: hsl(265, 51%, 20%); /* Fundo da caixa de login */
+    padding: 45px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px; /* Largura máxima da caixa */
+    text-align: left; /* Alinha o texto à esquerda */
+    opacity: 95%;
+}
+
+/* Título da caixa */
+.login_box h2 {
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Estilo para os rótulos */
+.login_box label {
+    font-size: 16px;
+    color: #c9c8c8; /* Cor do rótulo */
+    margin-bottom: 5px;
+    display: block; /* Faz com que o rótulo ocupe toda a linha */
+}
+
+/* Estilo para os campos de entrada */
+.login_box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #442d61;
+    background-color: #6a5385;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box; /* Inclui padding no cálculo da largura */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
+}
+
+/* Efeito de foco (quando o campo é selecionado) */
+.login_box input:focus {
+    border-color: #645edd; /* Cor da borda quando o campo é focado */
+    box-shadow: 0 0 10px rgba(100, 94, 221, 0.6); /* Sombra para destacar o campo */
+}
+
+/* Estilo para o botão de envio */
+.login_box button {
+    width: 100%;
+    padding: 14px; 
+    background-color: #645edd; /* Cor roxa */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px; /* Aumentei o distanciamento entre o campo de senha e o botão */
+    box-sizing: border-box; /* Inclui padding no cálculo da largura */
+}
+
+/* Hover para o botão */
+.login_box button:hover {
+    background-color: #5a52e3;
+}
+
+/* Estilo para os links de navegação */
+.login_box .links {
+    margin-top: 20px;
+    text-align: center; /* Centraliza os links */
+}
+
+.login_box .links p {
+    margin: 5px 0;
+}
+
+.login_box .links a {
+    color: #bbb; /* Cor clara para os links */
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login_box .links a:hover {
+    text-decoration: underline;
+}

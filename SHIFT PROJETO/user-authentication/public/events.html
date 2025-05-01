@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .error {
+            text-align: center;
+            color: red;
+        }
+        select {
+            padding: 5px;
+        }
+        /* Green ball style */
+        .green-ball {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: green;
+            display: inline-block;
+        }
+        /* Grey ball style */
+        .grey-ball {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: grey;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Active Events</h1>
+        <table id="eventsTable">
+            <thead>
+                <tr>
+                    <th>Event Title</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Organizer</th>
+                    <th>Rating</th>
+                    <th>Status</th>  <!-- This column will be removed, ball will go at the end -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Events will be added here dynamically -->
+            </tbody>
+        </table>
+        <div id="errorMessage" class="error"></div>
+    </div>
+
+    <script>
+        // Fetch events from the /api/events route (backend route)
+        async function fetchEvents() {
+            try {
+                const response = await fetch('/api/events');
+                const events = await response.json();
+
+                const tableBody = document.getElementById('eventsTable').getElementsByTagName('tbody')[0];
+
+                if (events.length === 0) {
+                    document.getElementById('errorMessage').innerText = 'No active events found.';
+                } else {
+                    events.forEach(event => {
+                        const row = tableBody.insertRow();
+
+                        const titleCell = row.insertCell(0);
+                        titleCell.textContent = event.title;
+
+                        const startDateCell = row.insertCell(1);
+                        startDateCell.textContent = new Date(event.startDate).toLocaleString();
+
+                        const endDateCell = row.insertCell(2);
+                        endDateCell.textContent = new Date(event.endDate).toLocaleString();
+
+                        const locationCell = row.insertCell(3);
+                        locationCell.textContent = event.location;
+
+                        const descriptionCell = row.insertCell(4);
+                        descriptionCell.textContent = event.description;
+
+                        const organizerCell = row.insertCell(5);
+                        organizerCell.textContent = event.organizer;
+
+                        const ratingCell = row.insertCell(6);
+                        const ratingSelect = document.createElement('select');
+                        const unratedOption = document.createElement('option');
+                        unratedOption.text = "Not Rated";
+                        unratedOption.value = ""; // Empty string for "Not Rated"
+                        ratingSelect.appendChild(unratedOption);
+
+                        for (let i = 1; i <= 5; i++) {
+                            const option = document.createElement('option');
+                            option.text = i;
+                            option.value = i;
+                            ratingSelect.appendChild(option);
+                        }
+
+                        if (event.rating) {
+                            ratingSelect.value = event.rating;
+                        } else {
+                            ratingSelect.value = ""; // Default to Not Rated
+                        }
+
+                        ratingSelect.addEventListener('change', async () => {
+                            let rating = ratingSelect.value;
+
+                            // If the rating is an empty string (Not Rated), set it to null
+                            if (rating === "") {
+                                rating = null;
+                            }
+
+                            const eventId = event._id; // Get the event ID
+                            console.log('Sending eventId:', eventId, 'rating:', rating); // Debugging
+
+                            try {
+                                const response = await fetch('/rateEvent', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ eventId, rating }),
+                                });
+
+                                if (response.ok) {
+                                    alert('Event rated successfully!');
+                                } else {
+                                    alert('Error rating the event');
+                                }
+                            } catch (error) {
+                                console.error('Error rating event:', error);
+                                alert('Error updating the rating.');
+                            }
+                        });
+
+                        ratingCell.appendChild(ratingSelect);
+
+                        // Add the status ball at the end of the row
+                        const statusCell = row.insertCell(7); // Insert a new cell for status ball
+                        const currentTime = new Date();
+                        const startTime = new Date(event.startDate);
+                        const endTime = new Date(event.endDate);
+
+                        const statusBall = document.createElement('span');
+                        if (currentTime >= startTime && currentTime <= endTime) {
+                            statusBall.classList.add('green-ball');  // Event is active, green ball
+                        } else {
+                            statusBall.classList.add('grey-ball');  // Event is not active, grey ball
+                        }
+
+                        statusCell.appendChild(statusBall);  // Add the ball at the end
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                document.getElementById('errorMessage').innerText = 'Error loading events.';
+            }
+        }
+
+        // Call fetchEvents() when the page loads
+        window.onload = fetchEvents;
+    </script>
+
+</body>
+</html>
