@@ -13,9 +13,9 @@ body {
     overflow: hidden; /* Impede que a página tenha barras de rolagem */
 }
 
-/* Caixa de login */
-.login_box {
-    background-color: hsl(265, 51%, 20%); /* Fundo da caixa de login */
+/* Caixa de registro */
+.register_box {
+    background-color: hsl(265, 51%, 20%); /* Fundo da caixa de registro */
     padding: 40px;
     border-radius: 15px;
     width: 100%;
@@ -25,21 +25,21 @@ body {
 }
 
 /* Título da caixa */
-.login_box h1 {
+.register_box h2 {
     margin-bottom: 30px;
     font-size: 40px;
     font-weight: 600;
 }
 
 /* Estilo para os rótulos */
-.login_box label {
+.register_box label {
     font-size: 16px;
     color: #c9c8c8; /* Cor do rótulo */
     display: block; /* Faz com que o rótulo ocupe toda a linha */
 }
 
 /* Estilo para os campos de entrada */
-.login_box input {
+.register_box input {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -53,13 +53,13 @@ body {
 }
 
 /* Efeito de foco (quando o campo é selecionado) */
-.login_box input:focus {
+.register_box input:focus {
     border-color: #9d9bc2; /* Cor da borda quando o campo é focado */
     box-shadow: 0 0 10px rgba(100, 94, 221, 0.6); /* Sombra para destacar o campo */
 }
 
 /* Estilo para o botão de envio */
-.login_box button {
+.register_box button {
     width: 100%;
     padding: 14px; 
     background-color: #4741be; /* Cor roxa */
@@ -73,49 +73,39 @@ body {
 }
 
 /* Hover para o botão */
-.login_box button:hover {
+.register_box button:hover {
     background-color: #5a52e3;
 }
 
-/* Estilo para os links de navegação */
-.login_box .links {
-    margin-top: 20px;
-    text-align: center; /* Centraliza os links */
+/* Estilo para a mensagem de erro */
+.error-message {
+    background-color: #f44336; /* Vermelho */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.login_box .links p {
+/* Estilo para os links de navegação */
+.register_box .links {
+    margin-top: 20px;
+    text-align: center; /* Alinha os links à esquerda */
+}
+
+.register_box .links p {
     margin: 5px 0;
 }
 
-.login_box .links a {
-    color: #bbb; /* Cor clara para os links */
+.register_box .links a {
+    color: #bbb; /* Cor clara para os links (igual ao da página de login) */
     text-decoration: none;
     font-size: 14px;
 }
 
-.login_box .links a:hover {
-    text-decoration: underline;
+.register_box .links a:hover {
+    text-decoration: underline; /* Adiciona o efeito de sublinhado no hover */
 }
 
-.error-message {
-    background-color: #f44336; /* Vermelho de erro */
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    display: none; /* Inicialmente oculta */
-    animation: fadeIn 0.5s ease-out; /* Animação de fade-in */
-}
-
-/* Animação de entrada para a mensagem de erro */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}

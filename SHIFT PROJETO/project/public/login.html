@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="pt">
+
+<html lang = "pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Login - What's the plan</title>
+    <link rel="stylesheet" href="login.css"> 
 </head>
+
 <body>
-    <div class="login_box">
-        <h2>Login</h2>
-        <form id="login-form">
+    <div class="login_box" id="loginBox">
+        <h1>Login</h1>
+        <form>
             <label for="email">Email:</label>
-            <input type="email" id="email" required><br>
+            <input type="email" id="email" name="email" placeholder="Introduza o seu email" required>
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Introduza a sua password" required>
 
-            <button type="submit">Login</button>
+            <button type="submit">Entrar</button>
         </form>
 
-        <p>Não tem uma conta? <a href="register.html">Registre-se aqui</a></p>
-    </div>
+        <div class="error-message" style="display: none;">
+            <p></p> 
+        </div>
 
-    <script src="login.js"></script>
+        <div class="links">
+            <p><a href="signup.html">Sign Up</a></p>
+            <p><a href="forgot_password.html">Esqueceu a senha!</a></p>
+        </div>
+    </div>
 </body>
+
 </html>
